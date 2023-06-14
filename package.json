@@ -8,12 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ValentinAlvarez98/PreEntrega1Alvarez.git"
+    "url": "git+https://github.com/ValentinAlvarez98/PreEntrega1Alvarez"
   },
   "author": "Valentín Alvarez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ValentinAlvarez98/PreEntrega1Alvarez/issues"
   },
-  "homepage": "https://github.com/ValentinAlvarez98/PreEntrega1Alvarez#readme"
+  "homepage": "https://github.com/ValentinAlvarez98/PreEntrega1Alvarez#readme",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
 }
