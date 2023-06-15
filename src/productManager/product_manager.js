@@ -1,5 +1,5 @@
 // Se importa el módulo fs para poder leer y escribir archivos.
-const fs = require('fs');
+import fs from 'fs';
 
 // Se crea la clase ProductManager.
 class ProductManager {
@@ -43,7 +43,7 @@ class ProductManager {
       };
 
       // Se crea un método para agregar un producto.
-      addProduct = async (title, description, price, thumbnail, code, stock) => {
+      addProduct = async (title, description, code, price, status = true, stock, category, thumbnails) => {
 
             // Se intenta ejecutar el método addProduct.
             try {
@@ -52,10 +52,12 @@ class ProductManager {
                   const newProduct = {
                         title,
                         description,
-                        price,
-                        thumbnail,
                         code,
+                        price,
+                        status,
                         stock,
+                        category,
+                        thumbnails,
                         id: this.products.length + 1,
                   };
 
@@ -63,10 +65,12 @@ class ProductManager {
                   if (
                         newProduct.title == null ||
                         newProduct.description == null ||
-                        newProduct.price == null ||
-                        newProduct.thumbnail == null ||
                         newProduct.code == null ||
-                        newProduct.stock == null
+                        newProduct.price == null ||
+                        // Si el valor por defecto de status es true. ¿Por qué debemos exigir que el usuario ingrese un valor sí o sí?
+                        newProduct.status == null ||
+                        newProduct.stock == null ||
+                        newProduct.category == null
                   ) {
 
                         console.log('El producto ingresado no puede tener campos vacíos.');
@@ -143,7 +147,7 @@ class ProductManager {
       };
 
       // Se crea un método para modificar un producto.
-      updateProduct = async (id, title, description, price, thumbnail, code, stock) => {
+      updateProduct = async (id, title, description, code, price, status, stock, category, thumbnails) => {
 
             // Se intenta ejecutar el método updateProduct.
             try {
@@ -165,20 +169,24 @@ class ProductManager {
                                     ...product,
                                     title: title || product.title,
                                     description: description || product.description,
-                                    price: price || product.price,
-                                    thumbnail: thumbnail || product.thumbnail,
                                     code: code || product.code,
+                                    price: price || product.price,
+                                    status: status || product.status,
                                     stock: stock || product.stock,
+                                    category: category || product.category,
+                                    thumbnails: thumbnails || product.thumbnail,
                               };
 
                               // Se verifica que el producto no tenga campos vacíos.
                               if (
                                     updatedProduct.title == null ||
                                     updatedProduct.description == null ||
-                                    updatedProduct.price == null ||
-                                    updatedProduct.thumbnail == null ||
                                     updatedProduct.code == null ||
-                                    updatedProduct.stock == null
+                                    updatedProduct.price == null ||
+                                    updatedProduct.status == null ||
+                                    updatedProduct.stock == null ||
+                                    updatedProduct.category == null ||
+                                    updatedProduct.thumbnails == null
                               ) {
 
                                     console.log('El producto ingresado no puede tener campos vacíos.');
@@ -323,9 +331,7 @@ class ProductManager {
 
       };
 
-
-
 };
 
 // Se exporta la clase ProductManager.
-module.exports = ProductManager;
+export default ProductManager;
