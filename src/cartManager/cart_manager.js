@@ -69,6 +69,70 @@ class CartManager {
 
       };
 
+      // Se crea el método addToCart para agregar el id del producto al carrito, utilizando los productos creados en products.json.
+      addToCart = async (cartId, prodId) => {
+
+            // Se intenta ejecutar la consulta.
+            try {
+
+                  // Se verifica que exista el archivo JSON de productos.
+                  if (!fs.existsSync('../data/products.json')) return console.log('No existe ningún producto creado.');
+
+                  // Se verifica que exista el archivo JSON de carritos.
+                  if (!fs.existsSync(this.path)) return console.log('No existe ningún carrito creado.');
+
+                  // Se obtiene el array de productos del carrito.
+                  const cartData = await fs.promises.readFile(this.path, 'utf-8');
+                  this.cart = JSON.parse(cartData);
+
+                  // Se busca el carrito por su id.
+                  const cart = this.cart.find((cart) => cart.id === cartId);
+
+                  // Se verifica si existe el carrito.
+                  if (!cart) return console.log(`El id: ${cartId} ingresado, no pertenece a ningún carrito.`);
+
+                  // Se verifica si existe el producto.
+                  const productData = await fs.promises.readFile('../data/products.json', 'utf-8');
+                  const products = JSON.parse(productData);
+                  const product = products.find((product) => product.id === prodId);
+
+                  if (!product) return console.log(`El id: ${prodId} ingresado, no pertenece a ningún producto.`);
+
+                  // Se verifica si el producto ya existe en el carrito.
+                  const existingProduct = cart.products.find((item) => item.product === prodId);
+
+                  if (existingProduct) {
+
+                        // Si el producto ya existe en el carrito, se agrega otra unidad del mismo.
+                        existingProduct.quantity += 1;
+
+                  } else {
+
+                        // Si el producto no existe, se agrega al array de productos del carrito.
+                        const newProduct = {
+                              product: prodId,
+                              quantity: 1
+                        };
+
+                        cart.products.push(newProduct);
+
+                  };
+
+                  // Se escribe el archivo JSON con el nuevo producto agregado.
+                  await fs.promises.writeFile(this.path, JSON.stringify(this.cart, null, '\t'), 'utf-8');
+
+                  console.log("Producto agregado al carrito.");
+
+            } catch (error) {
+
+                  // Si hubo un error al ejecutar la consulta, se envía un mensaje de error.
+                  console.log('Error al ejecutar el método addToCart:', error);
+                  throw error;
+
+            };
+
+      };
+
 };
 
 // Se exporta la clase ProductManager.
