@@ -58,7 +58,7 @@ class ProductManager {
                         stock,
                         category,
                         thumbnails,
-                        id: this.products.length + 1,
+                        id: Math.floor(Math.random() * 100) + 1
                   };
 
                   // Se verifica que el producto no tenga campos vacíos.
@@ -85,6 +85,14 @@ class ProductManager {
                         return;
 
                   }
+
+                  // Se verifica que el id del producto no exista.
+                  if (this.products.some((product) => product.id === newProduct.id)) {
+
+                        // Si el id existe, se cambia el id del producto.
+                        newProduct.id = Math.floor(Math.random() * 100) + 1;
+
+                  };
 
                   // Se pushea el producto al array.
                   this.products.push(newProduct);

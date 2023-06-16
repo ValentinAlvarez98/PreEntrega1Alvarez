@@ -81,6 +81,16 @@ router.post('/:cid/product/:pid', async (req, res) => {
             // Se agrega el producto al carrito utilizando el método addToCart de la clase CartManager.
             const cart = await cartManager.addToCart(Number(cartId), Number(productId));
 
+            // Si no se encontró el carrito o el producto, se envía un mensaje de error.
+            if (cart === null) {
+
+                  return res.status(404).send({
+                        status: "error",
+                        error: `No se ha podido encontrar el carrito con el id: ${Number(cartId)} o el producto con el id: ${Number(productId)}`
+                  });
+
+            };
+
             // Si se encontró el carrito y el producto, se envía el carrito.
             res.status(201).send({
                   status: "success",

@@ -89,14 +89,14 @@ class CartManager {
                   const cart = this.cart.find((cart) => cart.id === cartId);
 
                   // Se verifica si existe el carrito.
-                  if (!cart) return console.log(`El id: ${cartId} ingresado, no pertenece a ningún carrito.`);
+                  if (!cart) return null;
 
                   // Se verifica si existe el producto.
                   const productData = await fs.promises.readFile('../data/products.json', 'utf-8');
                   const products = JSON.parse(productData);
                   const product = products.find((product) => product.id === prodId);
 
-                  if (!product) return console.log(`El id: ${prodId} ingresado, no pertenece a ningún producto.`);
+                  if (!product) return null;
 
                   // Se verifica si el producto ya existe en el carrito.
                   const existingProduct = cart.products.find((item) => item.product === prodId);
